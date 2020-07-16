@@ -1,0 +1,9 @@
+# ide configure
+.idea/*
+*/.idea/*
+*/.ftpconfig
+.project
+*/.project
+*/.DS_Store
+
+log/*
