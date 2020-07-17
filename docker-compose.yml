@@ -1,6 +1,7 @@
 version: "3"
 services:
     nginx:
+        image: npnginx
         build:
             context: ./dockerfiles/nginx
             args:
@@ -20,6 +21,7 @@ services:
             - testphp
 
     php:
+        image: npphp
         build:
             context: ./dockerfiles/php
             args:
@@ -35,6 +37,7 @@ services:
             - "9732:9000"
 
     testphp:
+        image: testphp
         build:
             context: ./dockerfiles/php
             args:
