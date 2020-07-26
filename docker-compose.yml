@@ -13,30 +13,30 @@ services:
             - ./conf/nginx.conf:/etc/nginx/nginx.conf
             - ./conf/conf.d:/etc/nginx/conf.d
             - ./log:/var/log/nginx
-            - ./src:/var/www
         ports:
             - "80:80"
         links:
-            - php
-            - testphp
+            - testnginx
 
-    php:
-        image: npphp
+    testnginx:
+        image: testnginx
         build:
-            context: ./dockerfiles/php
+            context: ./dockerfiles/nginx
             args:
                 ALPINE_VERSION: ${ALPINE_VERSION}
                 CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
                 TZ: ${TZ}
-        container_name: npphp
+        container_name: testnginx
         volumes:
-            - ./conf/php.ini:/etc/php7/php.ini
-            - ./conf/php-fpm.d:/etc/php7/php-fpm.d
+            - ./conf/conf.d/test.com/nginx.conf:/etc/nginx/nginx.conf
+            - ./log/test.com:/var/log/nginx
             - ./src:/var/www
         ports:
-            - "9732:9000"
+            - "8080:80"
+        links:
+            - php
 
-    testphp:
+    php:
         image: testphp
         build:
             context: ./dockerfiles/php
@@ -50,4 +50,4 @@ services:
             - ./conf/php-fpm.d:/etc/php7/php-fpm.d
             - ./src/test:/var/www/test
         ports:
-            - "9733:9000"
+            - "9732:9000"
